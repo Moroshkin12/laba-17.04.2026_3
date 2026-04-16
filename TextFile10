@@ -1,0 +1,64 @@
+#TextFile10. Найти все целые числа из промежутка [a;b], у которых первая и последняя цифры совпадают.
+# Ответ записать в файл с именем b.txt, располагая по одному числу в строке.
+# Если таких чисел нет, то результирующий файл должен быть создан, но пуст.
+
+import math
+
+def find_numbers_with_same_first_last_digit(a, b):
+    """
+    Находит все целые числа из промежутка [a; b], у которых первая и последняя цифры совпадают.
+
+    Args:
+        a (int): начало промежутка (включительно).
+        b (int): конец промежутка (включительно).
+
+    Returns:
+        list: список чисел, удовлетворяющих условию.
+    """
+    result = []
+    for number in range(a, b + 1):
+        str_number = (str(abs(number)))
+        if str_number[0] == str_number[-1]:
+            result.append(number)
+    return result
+
+
+def write_numbers_to_file(numbers, filename):
+    """
+    Записывает список чисел в файл, по одному числу в строке.
+
+    """
+    with open(filename, 'w') as file:
+        for number in numbers:
+            file.write(f"{number}\n")
+
+
+def main() :
+    """Основная функция программы."""
+    try:
+        a = int(input("Введите начало промежутка (a): "))
+        b = int(input("Введите конец промежутка (b): "))
+
+        matching_numbers = find_numbers_with_same_first_last_digit(a, b)
+
+        output_filename = "b1.txt"
+
+        write_numbers_to_file(matching_numbers, output_filename)
+
+
+        if matching_numbers:
+            print("Найденные числа записаны в файл",output_filename)
+        else:
+            print("Нет чисел, удовлетворяющих условию. Файл", output_filename, " создан, но пуст.")
+
+    except ValueError:
+        print("Ошибка: введите целые числа!")
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+
+
+
+main()
+
+
+# -100 -10. aaa. 100, 10
