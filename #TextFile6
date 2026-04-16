@@ -1,0 +1,56 @@
+#TextFile6. Дан текстовый файл с именем b.txt, в котором записано несколько натуральных чисел (по одному в строке).
+# Необходимо посчитать количество чётных трёхзначных чисел, которые хранятся в этом файле.
+# Условия задачи: списки использовать запрещается, файл для чтения можно открыть только один раз.
+
+
+import os
+
+
+def count_even_three_digit_numbers(filename):
+    """
+    Подсчитывает количество чётных трёхзначных чисел в файле.
+    проверяет существование фалйа и его открытие
+
+    Returns:
+        int: количество чётных трёхзначных чисел в файле.
+    """
+    count = 0
+
+
+    if not os.path.isfile(filename):
+        print("Ошибка: файл ",filename, " не существует.")
+        return 0
+
+    try:
+        with open(filename, 'r') as file:
+
+            for line in file:
+                line = line.strip()
+
+                if not line:
+                    continue
+
+                try:
+                    number = int(line)
+
+                    # Проверяем, что число трёхзначное (от 100 до 999) и чётное
+                    if 100 <= number <= 999 and number % 2 == 0:
+                        count += 1
+
+                except ValueError:
+                    print(line, "не является чилом!!!Пропускаем!!!")
+
+    except PermissionError:
+        print("Ошибка: нет прав доступа к файлу", filename)
+        return 0
+    except Exception as e:
+        print("Неожиданная ошибка при чтении файла")
+        return 0
+
+    return count
+
+
+
+filename = 'b.txt'
+result = count_even_three_digit_numbers(filename)
+print("Количество чётных трёхзначных чисел = ",result)
