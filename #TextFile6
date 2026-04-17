@@ -3,9 +3,6 @@
 # Условия задачи: списки использовать запрещается, файл для чтения можно открыть только один раз.
 
 
-import os
-
-
 def count_even_three_digit_numbers(filename):
     """
     Подсчитывает количество чётных трёхзначных чисел в файле.
@@ -17,9 +14,7 @@ def count_even_three_digit_numbers(filename):
     count = 0
 
 
-    if not os.path.isfile(filename):
-        print("Ошибка: файл ",filename, " не существует.")
-        return 0
+
 
     try:
         with open(filename, 'r') as file:
@@ -33,19 +28,25 @@ def count_even_three_digit_numbers(filename):
                 try:
                     number = int(line)
 
-                    # Проверяем, что число трёхзначное (от 100 до 999) и чётное
                     if 100 <= number <= 999 and number % 2 == 0:
                         count += 1
 
                 except ValueError:
                     print(line, "не является чилом!!!Пропускаем!!!")
 
+    except FileNotFoundError:
+        print("Ошибка.Файл ненайден!!!")
+        return 0
+
     except PermissionError:
         print("Ошибка: нет прав доступа к файлу", filename)
         return 0
+
     except Exception as e:
         print("Неожиданная ошибка при чтении файла")
         return 0
+
+
 
     return count
 
@@ -53,4 +54,4 @@ def count_even_three_digit_numbers(filename):
 
 filename = 'b.txt'
 result = count_even_three_digit_numbers(filename)
-print("Количество чётных трёхзначных чисел = ",result)
+print("Количество чётных трёхзначных чисел = ", result)
